@@ -28,6 +28,8 @@ import MenuBar from '@/layout/menu/MenuBar.vue'
   }
 
   .header {
+    display: flex;
+    align-items: center;
     background-color: #009688;
   }
 

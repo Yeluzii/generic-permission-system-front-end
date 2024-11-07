@@ -1,14 +1,33 @@
 <template>
   <div class="logo">
     <img :src="MenuLogo" />
-    <span class="logo-title">{{ title }}</span>
+    <span v-if="show" class="logo-title">{{ title }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import MenuLogo from '@/assets/MenuLogo.png'
+import { useMenuStore } from '@/store/menu/index'
+// 获取 store
+const store = useMenuStore()
 const title = ref('通用后台权限系统')
+
+// 解决伸缩僵硬问题：延时
+const show = ref(true)
+
+watch(
+  () => store.getCollapse,
+  (collapsed: boolean) => {
+    if (!collapsed) {
+      setTimeout(() => {
+        show.value = !collapsed
+      }, 300)
+    } else {
+      show.value = !collapsed
+    }
+  }
+)
 </script>
 
 <style scoped>

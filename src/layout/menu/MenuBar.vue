@@ -1,8 +1,9 @@
 <template>
   <menu-logo></menu-logo>
   <el-menu
-    :default-active="activeIndex"
+    :default-active="defaultActive"
     class="el-menu-vertical-demo"
+    :collapse="isCollapse"
     unique-opened
     background-color="#304156"
     @open="handleOpen"
@@ -15,24 +16,25 @@
 
 <script setup lang="ts">
 import { reactive, computed } from 'vue'
+import { useMenuStore } from '@/store/menu/index'
 import MenuItem from '@/layout/menu/MenuItem.vue'
 import MenuLogo from './MenuLogo.vue'
 import { useRoute } from 'vue-router'
+
+// 获取 store
+const store = useMenuStore()
+// 获取状态
+const isCollapse = computed(() => {
+  return store.getCollapse
+})
+
 const route = useRoute()
 
-// 获取激活的菜单
-const activeIndex = computed(() => {
+// 当前激活的菜单:当前激活的菜单
+const defaultActive = computed(() => {
   const { path } = route
   return path
 })
-
-const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
-
-const handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath)
-}
 
 let menuList = reactive([
   {
@@ -109,6 +111,14 @@ let menuList = reactive([
     ]
   }
 ])
+
+const handleOpen = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
+
+const handleClose = (key: string, keyPath: string[]) => {
+  console.log(key, keyPath)
+}
 </script>
 
 <style scoped lang="scss">
