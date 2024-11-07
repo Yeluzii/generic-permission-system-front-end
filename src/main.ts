@@ -8,9 +8,14 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import { createPinia } from 'pinia'
+import piniaPersist from 'pinia-plugin-persist'
+// 实例化 Pinia
 const pinia = createPinia()
-
+// 使用持久化插件
 const app = createApp(App)
+
+pinia.use(piniaPersist)
+
 app.use(ElementPlus).use(router).use(pinia).mount('#app')
 
 // 全局注册图标组件
