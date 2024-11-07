@@ -6,6 +6,13 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "baseUrl": ".", // paths 路径解析起点
+    "paths": {
+      "@/*": [
+        // 路径别名设置
+        "src/*"
+      ]
+    },
 
     /* Bundler mode */
     "moduleResolution": "Bundler",
