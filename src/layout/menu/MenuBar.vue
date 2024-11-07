@@ -1,4 +1,5 @@
 <template>
+  <menu-logo></menu-logo>
   <el-menu
     :default-active="2"
     class="el-menu-vertical-demo"
@@ -12,6 +13,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import MenuItem from '@/layout/menu/MenuItem.vue'
+import MenuLogo from './MenuLogo.vue'
 
 let menuList = reactive([
   {
