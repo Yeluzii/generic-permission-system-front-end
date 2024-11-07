@@ -36,8 +36,9 @@ export default [
   // 8. 自定义规则，根据需要增加 eslint 主要是校验代码规范 prettier 格式化代码
   {
     rules: {
-      'no-console': 'warn',
-      'vue/multi-word-component-names': 'off'
+      'no-unused-vars': 'warn', // 未使用的变量为警告
+      'vue/multi-word-component-names': 'off', // 关闭组件名多个单词命名
+      '@typescript-eslint/no-explicit-any': 'warn'
     }
   },
   prettierRecommend
