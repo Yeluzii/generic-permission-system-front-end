@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint",
     "lint:fix": "eslint --fix --quiet",
-    "prepare": "husky"
+    "prepare": "husky",
+    "changelog": "conventional-changelog -i CHANGELOG.md -s"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
