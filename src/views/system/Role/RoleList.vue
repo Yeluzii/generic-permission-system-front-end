@@ -49,7 +49,8 @@
 import { reactive, ref } from 'vue'
 import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
-import { FormInstance } from 'element-plus'
+import { ElMessage, FormInstance } from 'element-plus'
+import { addApi } from '@/api/role'
 
 //表单ref属性
 const addRef = ref<FormInstance>()
@@ -88,9 +89,16 @@ const rules = reactive({
 
 //表单提交
 const commit = () => {
-  addRef.value?.validate((valid) => {
+  addRef.value?.validate(async (valid) => {
     if (valid) {
       console.log('表单验证通过')
+      // 提交请求
+      let res = await addApi(addModel)
+      if (res && res.code == 200) {
+        ElMessage.success(res.msg)
+        //关闭弹框
+        onClose()
+      }
     }
   })
 }
