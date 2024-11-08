@@ -85,8 +85,12 @@ import { nextTick, onMounted, reactive, ref } from 'vue'
 import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
 import { ElMessage, FormInstance } from 'element-plus'
-import { addApi, getListApi, editApi } from '@/api/role'
+import { addApi, getListApi, editApi, deleteApi } from '@/api/role'
 import { SysRole } from '@/api/role/RoleModel'
+
+import useInstance from '@/hooks/useInstance'
+//获取全局golbal
+const { global } = useInstance()
 
 //表单ref属性
 const addRef = ref<FormInstance>()
@@ -176,6 +180,17 @@ const editBtn = (row: SysRole) => {
 //删除按钮
 const deleteBtn = async (roleId: string) => {
   console.log(roleId)
+  console.log(global)
+  const confirm = await global.$myConfirm('确定删除该数据吗？')
+  console.log(confirm)
+  if (confirm) {
+    let res = await deleteApi(roleId)
+    if (res && res.code == 200) {
+      ElMessage.success(res.msg)
+      //刷新列表
+      getList()
+    }
+  }
 }
 
 // 页容量改变时触发

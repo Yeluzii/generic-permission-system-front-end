@@ -14,9 +14,13 @@ import piniaPersist from 'pinia-plugin-persist'
 // 实例化 Pinia
 const pinia = createPinia()
 // 使用持久化插件
-const app = createApp(App)
-
 pinia.use(piniaPersist)
+
+import myConfirm from './utils/myconfirm'
+
+const app = createApp(App)
+// 全局挂载
+app.config.globalProperties.$myConfirm = myConfirm
 
 app
   .use(ElementPlus, {
