@@ -78,6 +78,7 @@
             <el-col :span="12" :offset="0">
               <el-form-item prop="roleId" label="角色：">
                 <SelectChecked
+                  ref="selectRef"
                   :options="options"
                   @selected="selected"
                 ></SelectChecked>
@@ -102,12 +103,13 @@
   </el-main>
 </template>
 <script setup lang="ts">
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, nextTick } from 'vue'
 import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
-import { FormInstance } from 'element-plus'
+import { ElMessage, FormInstance } from 'element-plus'
 import SelectChecked from '@/components/SelectChecked.vue'
 import { getSelectApi } from '@/api/role/index'
+import { addApi } from '@/api/user/index'
 //表单ref属性
 const addForm = ref<FormInstance>()
 //弹框属性
@@ -170,11 +172,22 @@ const rules = reactive({
 })
 //新增按钮
 const addBtn = () => {
+  // 清空下拉数据
+  options.value = []
+  // 获取下拉数据
+  getSelect()
   dialog.title = '新增'
-  dialog.height = 180
-  //显示弹框
+  dialog.height = 260
+  // 显示弹框
   onShow()
+  nextTick(() => {
+    // 清空下拉数据
+    selectRef.value.clear()
+  })
+  // 清空表单
+  addForm.value?.resetFields()
 }
+const selectRef = ref()
 
 // 下拉数据
 let options = ref([])
@@ -187,29 +200,30 @@ const selected = (value: Array<string | number>) => {
 }
 
 // 查询角色下拉数据
-const fetchRoleOptions = async () => {
-  try {
-    const response = await getSelectApi() // 假设getSelectApi()返回的是Promise
-    if (response.code === 200) {
-      // 直接使用返回的数据
-      options.value = response.data
-    } else {
-      console.error('查询失败:', response.msg)
-    }
-  } catch (error) {
-    console.error('Failed to fetch role options:', error)
+const getSelect = async () => {
+  let res = await getSelectApi()
+  if (res && res.code == 200) {
+    options.value = []
+    options.value = res.data
   }
 }
 
 // 组件挂载完成后调用
-onMounted(fetchRoleOptions)
+onMounted(() => {
+  getSelect()
+})
 
 //提交表单
 const commit = () => {
   //验证表单
-  addForm.value?.validate((valid) => {
+  addForm.value?.validate(async (valid) => {
     if (valid) {
       console.log('验证通过')
+      let res = await addApi(addModel)
+      if (res && res.code == 200) {
+        ElMessage.success(res.msg)
+        onClose()
+      }
     }
   })
 }
