@@ -76,6 +76,15 @@
 
           <el-row>
             <el-col :span="12" :offset="0">
+              <el-form-item prop="roleId" label="角色：">
+                <SelectChecked
+                  :options="options"
+                  @selected="selected"
+                ></SelectChecked>
+              </el-form-item>
+            </el-col>
+
+            <el-col :span="12" :offset="0">
               <el-form-item prop="username" label="账户：">
                 <el-input v-model="addModel.username"></el-input>
               </el-form-item>
@@ -93,10 +102,12 @@
   </el-main>
 </template>
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import SysDialog from '@/components/SysDialog.vue'
 import useDialog from '@/hooks/useDialog'
 import { FormInstance } from 'element-plus'
+import SelectChecked from '@/components/SelectChecked.vue'
+import { getSelectApi } from '@/api/role/index'
 //表单ref属性
 const addForm = ref<FormInstance>()
 //弹框属性
@@ -116,7 +127,8 @@ const addModel = reactive({
   phone: '',
   email: '',
   gender: '0',
-  nickName: ''
+  nickName: '',
+  roleId: ''
 })
 //表单验证规则
 const rules = reactive({
@@ -163,6 +175,35 @@ const addBtn = () => {
   //显示弹框
   onShow()
 }
+
+// 下拉数据
+let options = ref([])
+
+// 勾选的值
+const selected = (value: Array<string | number>) => {
+  console.log(value)
+  addModel.roleId = value.join(',')
+  console.log(addModel)
+}
+
+// 查询角色下拉数据
+const fetchRoleOptions = async () => {
+  try {
+    const response = await getSelectApi() // 假设getSelectApi()返回的是Promise
+    if (response.code === 200) {
+      // 直接使用返回的数据
+      options.value = response.data
+    } else {
+      console.error('查询失败:', response.msg)
+    }
+  } catch (error) {
+    console.error('Failed to fetch role options:', error)
+  }
+}
+
+// 组件挂载完成后调用
+onMounted(fetchRoleOptions)
+
 //提交表单
 const commit = () => {
   //验证表单
