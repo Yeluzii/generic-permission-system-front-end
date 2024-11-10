@@ -169,8 +169,18 @@ import useDialog from '@/hooks/useDialog'
 import { ElMessage, FormInstance } from 'element-plus'
 import SelectChecked from '@/components/SelectChecked.vue'
 import { getSelectApi } from '@/api/role/index'
-import { addApi, getListApi, getRoleListApi, editApi } from '@/api/user/index'
+import {
+  addApi,
+  getListApi,
+  getRoleListApi,
+  editApi,
+  deleteApi
+} from '@/api/user/index'
 import { User } from '@/api/user/UserModel'
+import useInstance from '@/hooks/useInstance'
+
+const { global } = useInstance()
+
 //表单ref属性
 const addForm = ref<FormInstance>()
 //弹框属性
@@ -296,8 +306,16 @@ const editBtn = async (row: User) => {
 }
 
 // 删除按钮
-const deleteBtn = (userId: string) => {
+const deleteBtn = async (userId: string) => {
   console.log(userId)
+  const confirm = await global.$myConfirm('确定删除该数据吗？')
+  if (confirm) {
+    let res = await deleteApi(userId)
+    if (res && res.code == 200) {
+      ElMessage.success(res.msg)
+      getList()
+    }
+  }
 }
 
 // 下拉数据

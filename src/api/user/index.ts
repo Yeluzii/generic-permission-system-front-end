@@ -20,3 +20,8 @@ export const getRoleListApi = (userId: string) => {
 export const editApi = (parm: User) => {
   return http.put('/api/sysUser', parm)
 }
+
+//删除
+export const deleteApi = (userId: string) => {
+  return http.delete(`/api/sysUser/${userId}`)
+}
