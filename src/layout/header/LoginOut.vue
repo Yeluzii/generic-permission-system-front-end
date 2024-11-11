@@ -6,7 +6,7 @@
     <template #dropdown>
       <el-dropdown-menu>
         <el-dropdown-item @click="updateBtn"> 修改密码 </el-dropdown-item>
-        <el-dropdown-item> 退出登录 </el-dropdown-item>
+        <el-dropdown-item @click="logout"> 退出登录 </el-dropdown-item>
       </el-dropdown-menu>
     </template>
   </el-dropdown>
@@ -49,6 +49,21 @@ import { reactive, ref } from 'vue'
 import { updatePasswordApi } from '@/api/user/index'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/user'
+import useInstance from '@/hooks/useInstance'
+// 获取全局 global
+const { global } = useInstance()
+// 退出登录
+const logout = async () => {
+  // 信息确定
+  const confirm = await global.$myConfirm('确定退出登录吗？')
+  if (confirm) {
+    // 清空数据
+    localStorage.clear()
+    // 跳转去登录
+    window.location.href = '/login'
+  }
+}
+
 const store = useUserStore()
 const router = useRouter()
 // 表单ref属性
