@@ -1,5 +1,5 @@
 import http from '@/http'
-import { User, UserListParm, Login, AssignParm } from './UserModel'
+import { User, UserListParm, Login, AssignParm, UpdateParm } from './UserModel'
 
 // 新增
 export const addApi = (parm: User) => {
@@ -43,4 +43,9 @@ export const loginApi = (parm: Login) => {
 //查询菜单树
 export const getAssignTreeApi = (parm: AssignParm) => {
   return http.post('/api/sysUser/tree', parm)
+}
+
+// 修改密码
+export const updatePasswordApi = (parm: UpdateParm) => {
+  return http.post('/api/sysUser/updatePassword', parm)
 }
