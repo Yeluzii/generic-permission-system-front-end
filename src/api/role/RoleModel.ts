@@ -11,3 +11,9 @@ export type RoleListParm = {
   roleName: string
   total: number
 }
+
+//分配菜单数据类型
+export type SaveMenuParm = {
+  roleId: string
+  list: Array<string>
+}
