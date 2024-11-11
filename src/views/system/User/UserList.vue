@@ -247,7 +247,7 @@ const rules = reactive({
   ],
   password: [
     {
-      required: true,
+      // required: true,
       trigger: ['blur', 'change'],
       message: '请输⼊密码'
     }
