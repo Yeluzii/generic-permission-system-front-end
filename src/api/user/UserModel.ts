@@ -24,3 +24,9 @@ export type Login = {
   password: string
   code: string
 }
+
+//菜单树参数
+export type AssignParm = {
+  roleId: string
+  userId: string
+}
