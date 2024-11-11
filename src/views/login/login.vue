@@ -119,6 +119,7 @@ const commit = () => {
         console.log(res)
         store.setUserId(res.data.userId)
         store.setNickName(res.data.nickName)
+        store.setToken(res.data.token)
         // 跳转首页
         router.push({ path: '/' })
       }
