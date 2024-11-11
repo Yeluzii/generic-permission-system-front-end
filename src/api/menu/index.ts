@@ -10,3 +10,8 @@ export const getParentApi = () => {
 export const addApi = (parm: MenuType) => {
   return http.post('/api/sysMenu', parm)
 }
+
+//列表
+export const getListApi = () => {
+  return http.get('/api/sysMenu/list')
+}
