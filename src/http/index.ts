@@ -10,7 +10,8 @@ import { ElMessage } from 'element-plus'
 // axios 请求配置
 const config = {
   baseURL: 'http://localhost:8089',
-  timeout: 10000
+  timeout: 10000,
+  withCredentials: true // 允许跨域请求时发送 Cookies
 }
 
 // 定义返回值类型
