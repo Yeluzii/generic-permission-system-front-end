@@ -49,3 +49,8 @@ export const getAssignTreeApi = (parm: AssignParm) => {
 export const updatePasswordApi = (parm: UpdateParm) => {
   return http.post('/api/sysUser/updatePassword', parm)
 }
+
+//获取⽤户信息
+export const getInfoApi = (userId: string) => {
+  return http.get('/api/sysUser/getInfo', { userId: userId })
+}
