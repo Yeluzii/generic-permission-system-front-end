@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/index'
+import * as echarts from 'echarts'
 
 // 引入 element plus
 import ElementPlus from 'element-plus'
@@ -21,6 +22,8 @@ import myConfirm from './utils/myconfirm'
 const app = createApp(App)
 // 全局挂载
 app.config.globalProperties.$myConfirm = myConfirm
+
+app.config.globalProperties.$echarts = echarts
 
 app
   .use(ElementPlus, {
