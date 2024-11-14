@@ -12,7 +12,7 @@
       <el-card style="flex: 1">
         <template #header>
           <div class="card-header">
-            <span>订单统计</span>
+            <span>订单统计1</span>
           </div>
         </template>
         <div ref="myChart" :style="{ width: '400px', height: '300px' }"></div>
